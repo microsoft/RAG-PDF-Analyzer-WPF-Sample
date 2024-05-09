@@ -9,7 +9,7 @@ namespace PDFAnalyzer
 {
     public class SLMRunner : IDisposable
     {
-        private readonly string ModelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "model", "Phi-3-mini-4k-instruct-onnx", "directml-int4-awq-block-128");
+        private readonly string ModelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "onnx-models", "phi3-directml-int4-awq-block-128");
 
         private Model? model = null;
         private Tokenizer? tokenizer = null;

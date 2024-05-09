@@ -14,7 +14,7 @@ namespace PDFAnalyzer
     public class RAGService : IDisposable
     {
         // model from https://huggingface.co/optimum/all-MiniLM-L6-v2
-        private readonly string modelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "model", "all-MiniLM-L6-v2");
+        private readonly string modelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "onnx-models", "all-MiniLM-L6-v2");
         private InferenceSession? _inferenceSession;
         private MyTokenizer? tokenizer = null;
         private VectorCollection? _embeddings = null;
