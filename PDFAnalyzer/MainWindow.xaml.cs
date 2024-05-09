@@ -290,7 +290,11 @@ namespace PDFAnalyzer
             {
                 BitmapImage bitmapImage = new();
 
+                bitmapImage.BeginInit();
                 bitmapImage.StreamSource = inMemoryRandomAccessStream.AsStream();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
 
                 PdfImage.Source = bitmapImage;
                 PageNumberTextBlock.Text = $"{pageId}/{pdfDocument.PageCount}";

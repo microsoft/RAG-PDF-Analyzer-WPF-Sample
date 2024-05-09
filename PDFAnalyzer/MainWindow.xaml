@@ -36,8 +36,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image x:Name="PdfImage" MouseLeftButtonDown="PdfImage_Tapped"  Stretch="Uniform" Grid.Column="1" Margin="0,16"/>
-            <Button x:Name="PreviousPageButton" Content="&lt;" Click="PreviousPageButton_Click" Grid.Column="0" HorizontalAlignment="Right" Margin="16"/>
-            <Button x:Name="NextPageButton" Content="&gt;" Click="NextPageButton_Click" Grid.Column="2" HorizontalAlignment="Left" Margin="16"/>
+            <Button x:Name="PreviousPageButton" Content="&lt;" Click="PreviousPageButton_Click" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16"/>
+            <Button x:Name="NextPageButton" Content="&gt;" Click="NextPageButton_Click" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16"/>
             <TextBlock x:Name="PageNumberTextBlock" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16" FontWeight="Bold" Foreground="White"/>
         </Grid>
         <Grid x:Name="IndexPDFGrid" Grid.RowSpan="4" Grid.ColumnSpan="2" Background="White">
