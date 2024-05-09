@@ -1,0 +1,55 @@
+﻿<Window x:Class="PDFAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PDFAnalyzer"
+        mc:Ignorable="d"
+        Title="RAG with Phi 3" Height="450" Width="800">
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Padding="16">
+            <TextBlock TextWrapping="WrapWithOverflow" FontSize="18">
+                <Run x:Name="PagesUsedRun"/>
+                <LineBreak/>
+                <LineBreak/>
+                <Run x:Name="AnswerRun"/>
+            </TextBlock>
+        </ScrollViewer>
+        <TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="0" FontSize="18" Margin="8"/>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button x:Name="AskSLMButton" IsEnabled="False" Content="Answer" Click="AskSLMButton_Click" HorizontalAlignment="Stretch" Margin="8,8,8,0"/>
+            <Button x:Name="ShowPDFPage" Content="Show PDF Page" Click="ShowPDFPage_Click" IsEnabled="False" HorizontalAlignment="Stretch" Margin="8,0,8,8"/>
+        </StackPanel>
+        <Grid x:Name="PdfImageGrid" Grid.RowSpan="4" Grid.ColumnSpan="2" Visibility="Collapsed" Background="#88000000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="PdfImage" MouseLeftButtonDown="PdfImage_Tapped"  Stretch="Uniform" Grid.Column="1" Margin="0,16"/>
+            <Button x:Name="PreviousPageButton" Content="&lt;" Click="PreviousPageButton_Click" Grid.Column="0" HorizontalAlignment="Right" Margin="16"/>
+            <Button x:Name="NextPageButton" Content="&gt;" Click="NextPageButton_Click" Grid.Column="2" HorizontalAlignment="Left" Margin="16"/>
+            <TextBlock x:Name="PageNumberTextBlock" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16" FontWeight="Bold" Foreground="White"/>
+        </Grid>
+        <Grid x:Name="IndexPDFGrid" Grid.RowSpan="4" Grid.ColumnSpan="2" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="IndexPDFButton" Content="Index PDF" Click="IndexPDFButton_Click" IsEnabled="False" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2" Margin="16,16,16,0"/>
+            <StackPanel x:Name="IndexPDFProgressStackPanel" Visibility="Collapsed" Orientation="Vertical" Grid.Row="1" Margin="16,0,16,16">
+                <TextBlock x:Name="IndexPDFProgressTextBlock" Margin="4"/>
+                <ProgressBar x:Name="IndexPDFProgressBar" Margin="4,0,4,4"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
