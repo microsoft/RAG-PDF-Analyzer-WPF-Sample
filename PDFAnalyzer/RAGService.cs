@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.IO;
 using BERTTokenizers.Base;
-using PDFAnalyzer.DXGIService;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System.Text.RegularExpressions;
 using System.Numerics;
@@ -45,7 +44,7 @@ namespace PDFAnalyzer
                 LogSeverityLevel = OrtLoggingLevel.ORT_LOGGING_LEVEL_INFO
             };
 
-            int deviceId = GraphicsService.GetBestDeviceId(out nuint maxDedicatedVideoMemory);
+            int deviceId = DXGIHelper.GetBestDeviceId(out nuint maxDedicatedVideoMemory);
             MaxDedicatedVideoMemory = maxDedicatedVideoMemory;
 
             sessionOptions.AppendExecutionProvider_DML(deviceId);

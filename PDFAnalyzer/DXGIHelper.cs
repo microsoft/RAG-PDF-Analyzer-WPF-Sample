@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dxgi;
 
-namespace PDFAnalyzer.DXGIService
+namespace PDFAnalyzer
 {
-    internal class GraphicsService
+    internal static class DXGIHelper
     {
         public static int GetBestDeviceId(out nuint maxDedicatedVideoMemory)
         {
@@ -44,7 +44,7 @@ namespace PDFAnalyzer.DXGIService
                         unsafe
                         {
                             dxgiAdapter1.GetDesc1(&dxgiAdapterDesc);
-                            
+
                             Debug.WriteLine($"\tDescription: {dxgiAdapterDesc.Description}");
                             Debug.WriteLine($"\tDedicatedVideoMemory: {(long)dxgiAdapterDesc.DedicatedVideoMemory / 1000000000}GB");
                             Debug.WriteLine($"\tSharedSystemMemory: {(long)dxgiAdapterDesc.SharedSystemMemory / 1000000000}GB");
