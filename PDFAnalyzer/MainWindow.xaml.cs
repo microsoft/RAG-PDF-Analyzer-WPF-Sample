@@ -86,10 +86,9 @@ namespace PDFAnalyzer
             IndexPDFProgressBar.Value = 0;
             IndexPDFProgressTextBlock.Text = "Reading PDF...";
 
-            pdfFile = await StorageFile.GetFileFromPathAsync(dialog.FileName);
             ShowPDFPage.IsEnabled = true;
-
-            await Task.Delay(1).ConfigureAwait(false);
+            Title = $"RAG with Phi 3 - {Path.GetFileName(dialog.FileName)}";
+            pdfFile = await StorageFile.GetFileFromPathAsync(dialog.FileName).AsTask().ConfigureAwait(false);
 
             var contents = new List<TextChunk>();
             using (PdfDocument document = PdfDocument.Open(pdfFile.Path))
