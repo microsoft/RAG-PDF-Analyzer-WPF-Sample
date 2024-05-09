@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PDFAnalyzer"
         mc:Ignorable="d"
-        Title="RAG with Phi 3" Height="450" Width="800">
+        Title="RAG with Phi 3" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
     <Grid Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
