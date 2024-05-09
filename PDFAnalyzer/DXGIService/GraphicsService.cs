@@ -45,7 +45,7 @@ namespace PDFAnalyzer.DXGIService
                         {
                             dxgiAdapter1.GetDesc1(&dxgiAdapterDesc);
                             
-                            Debug.WriteLine($"\tDescription: {dxgiAdapterDesc.Description.AsReadOnlySpan()}");
+                            Debug.WriteLine($"\tDescription: {dxgiAdapterDesc.Description}");
                             Debug.WriteLine($"\tDedicatedVideoMemory: {(long)dxgiAdapterDesc.DedicatedVideoMemory / 1000000000}GB");
                             Debug.WriteLine($"\tSharedSystemMemory: {(long)dxgiAdapterDesc.SharedSystemMemory / 1000000000}GB");
                         }
