@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-    <!--<TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>-->
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -14,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="BERTTokenizers" Version="1.2.0" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.17.3" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.18.0-dev-20240426-0116-b842effa29" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.2.0-rc6" />
     <PackageReference Include="PdfPig" Version="0.1.8" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.22621.6" />
