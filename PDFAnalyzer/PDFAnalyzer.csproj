@@ -16,7 +16,9 @@
     <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.18.0-dev-20240426-0116-b842effa29" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.2.0-rc6" />
     <PackageReference Include="PdfPig" Version="0.1.8" />
-    <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.22621.6" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
