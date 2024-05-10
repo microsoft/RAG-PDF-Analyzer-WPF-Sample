@@ -236,9 +236,10 @@ namespace PDFAnalyzer
 
             PagesUsedRun.Text = $"Using page(s) : {string.Join(", ", selectedPages)}";
 
-            var pagesChunks = contents.GroupBy(c => c.Page).Select(g => new { Page = g.Key, Text = string.Join(Environment.NewLine, g.OrderBy(g => g.ChunkIndexInSource).Select(c => c.Text)) }).ToList();
+            var pagesChunks = contents.GroupBy(c => c.Page)
+                .Select(g => $"{Environment.NewLine}Page {g.Key}: {string.Join(Environment.NewLine, g.Select(c => c.Text))}").ToList();
 
-            prompt += string.Join(Environment.NewLine, pagesChunks.Select(c => $"{Environment.NewLine}Page {c.Page}: {c.Text}"));
+            prompt += string.Join(Environment.NewLine, pagesChunks);
 
             prompt += $"""
         <|end|>
