@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dxgi;
 
@@ -16,7 +14,7 @@ namespace PDFAnalyzer
             IDXGIFactory2? dxgiFactory = null;
             try
             {
-                var createFlags = 0u;
+                DXGI_CREATE_FACTORY_FLAGS createFlags = 0;
                 Windows.Win32.PInvoke.CreateDXGIFactory2(createFlags, typeof(IDXGIFactory2).GUID, out object dxgiFactoryObj).ThrowOnFailure();
                 dxgiFactory = (IDXGIFactory2)dxgiFactoryObj;
 
@@ -31,7 +29,6 @@ namespace PDFAnalyzer
                     {
                         if (result != HRESULT.DXGI_ERROR_NOT_FOUND)
                         {
-                            ReleaseIfNotNull(dxgiAdapter1);
                             result.ThrowOnFailure();
                         }
                         index = 0;
@@ -40,15 +37,13 @@ namespace PDFAnalyzer
                     {
                         Debug.WriteLine($"Adapter {index}:");
 
-                        DXGI_ADAPTER_DESC1 dxgiAdapterDesc;
-                        unsafe
-                        {
-                            dxgiAdapter1.GetDesc1(&dxgiAdapterDesc);
+                        DXGI_ADAPTER_DESC1 dxgiAdapterDesc = dxgiAdapter1.GetDesc1();
 
-                            Debug.WriteLine($"\tDescription: {dxgiAdapterDesc.Description}");
-                            Debug.WriteLine($"\tDedicatedVideoMemory: {(long)dxgiAdapterDesc.DedicatedVideoMemory / 1000000000}GB");
-                            Debug.WriteLine($"\tSharedSystemMemory: {(long)dxgiAdapterDesc.SharedSystemMemory / 1000000000}GB");
-                        }
+                        Debug.WriteLine($"\tDescription: {dxgiAdapterDesc.Description}");
+                        const double gb = 1024 * 1024 * 1024;
+                        Debug.WriteLine($"\tDedicatedVideoMemory: {dxgiAdapterDesc.DedicatedVideoMemory / gb}GB");
+                        Debug.WriteLine($"\tSharedSystemMemory: {dxgiAdapterDesc.SharedSystemMemory / gb}GB");
+
                         if (selectedAdapter == null || dxgiAdapterDesc.DedicatedVideoMemory > maxDedicatedVideoMemory)
                         {
                             maxDedicatedVideoMemory = dxgiAdapterDesc.DedicatedVideoMemory;
@@ -57,27 +52,17 @@ namespace PDFAnalyzer
                         }
 
                         index++;
-                        ReleaseIfNotNull(dxgiAdapter1);
                         dxgiAdapter1 = null;
                     }
                 }
                 while (index != 0);
             }
-            finally
+            catch (Exception ex)
             {
-                ReleaseIfNotNull(dxgiFactory);
+                Debug.WriteLine(ex);
             }
 
             return deviceId;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ReleaseIfNotNull(object? unknown)
-        {
-            if (unknown is not null)
-            {
-                Marshal.FinalReleaseComObject(unknown);
-            }
         }
     }
 }
