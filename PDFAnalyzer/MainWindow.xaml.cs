@@ -204,6 +204,7 @@ namespace PDFAnalyzer
                 IndexPDFButton.IsEnabled = RAGService.IsModelReady;
                 await Task.Delay(1000);
                 IndexPDFGrid.Visibility = Visibility.Collapsed;
+                ChatGrid.Visibility = Visibility.Visible;
             });
         }
 
