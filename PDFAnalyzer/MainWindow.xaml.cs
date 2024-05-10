@@ -59,6 +59,7 @@ namespace PDFAnalyzer
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            SearchTextBoxInitialText = SearchTextBox.Text;
             await Task.Run(() => Task.WhenAll(SLMRunner.InitializeAsync(), RAGService.InitializeAsync()));
         }
 
@@ -340,6 +341,24 @@ namespace PDFAnalyzer
             }
             selectedPageIndex++;
             await UpdatePdfImageAsync().ConfigureAwait(false);
+        }
+
+        private string SearchTextBoxInitialText = string.Empty;
+
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox.Text == SearchTextBoxInitialText)
+            {
+                SearchTextBox.Text = string.Empty;
+            }
+        }
+
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = SearchTextBoxInitialText;
+            }
         }
     }
 }

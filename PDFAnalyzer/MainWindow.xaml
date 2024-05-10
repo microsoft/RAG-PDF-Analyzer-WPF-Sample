@@ -48,7 +48,9 @@
                 Margin="16,16,16,16"
                 VerticalAlignment="Stretch"
                 FontSize="18"
-                Text="Search PDF.."
+                Text="Search PDF..."
+                GotFocus="SearchTextBox_GotFocus"
+                LostFocus="SearchTextBox_LostFocus"
                 TextWrapping="Wrap" />
             <Button
                 x:Name="AskSLMButton"
