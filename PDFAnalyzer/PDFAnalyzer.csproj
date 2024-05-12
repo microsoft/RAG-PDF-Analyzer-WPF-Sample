@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="BERTTokenizers" Version="1.2.0" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.19.0-dev-20240509-0118-69cfcba38a" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.19.0-dev-20240511-1102-643ed14720" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.2.0-rc6" />
     <PackageReference Include="PdfPig" Version="0.1.8" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
