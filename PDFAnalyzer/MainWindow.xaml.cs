@@ -92,6 +92,7 @@ namespace PDFAnalyzer
             pdfFile = await StorageFile.GetFileFromPathAsync(dialog.FileName).AsTask().ConfigureAwait(false);
 
             var contents = new List<TextChunk>();
+            // 1) Read the PDF file
             using (PdfDocument document = PdfDocument.Open(pdfFile.Path))
             {
                 foreach (var page in document.GetPages())
@@ -113,6 +114,7 @@ namespace PDFAnalyzer
                 }
             }
 
+            // 2) Split the text into chunks
             var maxLength = 1024 / 4;
             for (int i = 0; i < contents.Count; i++)
             {
@@ -182,6 +184,7 @@ namespace PDFAnalyzer
 
             cts = new CancellationTokenSource();
 
+            // 3) Index the chunks
             await RAGService.InitializeAsync(contents, (sender, progress) =>
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, () =>
@@ -229,6 +232,7 @@ namespace PDFAnalyzer
 
             SLMRunner.SearchMaxLength = Math.Min(4096, Math.Max(1024, (int)(RAGService.MaxDedicatedVideoMemory / (1024 * 1024))));
 
+            // 4) Search the chunks using the user's prompt, with the same model used for indexing
             List<TextChunk> contents = (await RAGService.Search(SearchTextBox.Text, 3, 1)).OrderBy(c => c.ChunkIndexInSource).ToList();
 
             selectedPages = contents.Select(c => (uint)c.Page).Distinct().ToList();
@@ -253,6 +257,7 @@ namespace PDFAnalyzer
 
             await Task.Run(async () =>
             {
+                // 5) Use Phi3 to generate the answer
                 await foreach (var partialResult in SLMRunner.InferStreamingAsync(prompt).WithCancellation(cts.Token))
                 {
                     fullResult += partialResult;

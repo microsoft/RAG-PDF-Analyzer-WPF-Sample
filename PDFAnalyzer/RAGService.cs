@@ -63,6 +63,7 @@ namespace PDFAnalyzer
 
             tokenizer ??= new MyTokenizer($@"{modelDir}\vocab.txt");
 
+            // 3.1) Tokenize the input text
             var encoded = tokenizer.CustomEncode(sentences);
 
             var input = new ModelInput
@@ -74,10 +75,9 @@ namespace PDFAnalyzer
 
             var runOptions = new RunOptions();
 
-            // round up
             int sequenceLength = input.InputIds.Length / sentences.Length;
 
-            // Create input tensors over the input data.
+            // 3.2) Create input tensors over the input data.
             using var inputIdsOrtValue = OrtValue.CreateTensorValueFromMemory(input.InputIds,
                   [sentences.Length, sequenceLength]);
 
@@ -101,6 +101,7 @@ namespace PDFAnalyzer
                 { typeIdsOrtValue }
             };
 
+            // 3.3) Create output tensors
             List<OrtValue> outputValues = [
                 OrtValue.CreateAllocatedTensorValue(OrtAllocator.DefaultInstance,
                     TensorElementType.Float, [sentences.Length, sequenceLength, 384]),
@@ -109,6 +110,7 @@ namespace PDFAnalyzer
 
             try
             {
+                // 3.4) Run the model
                 var output = await _inferenceSession.RunAsync(runOptions, inputNames, inputs, _inferenceSession.OutputNames, outputValues);
 
                 var firstElement = output.ToList()[0];
@@ -119,6 +121,7 @@ namespace PDFAnalyzer
 
                 var resultArray = NormalizeAndDivide(sentence_embeddings, typeAndShape.Shape);
 
+                // 3.5) Split the result array into individual sentence embeddings
                 return Enumerable.Chunk(resultArray, resultArray.Length / sentences.Length).ToArray();
             }
             catch (Exception e)

@@ -35,6 +35,7 @@ namespace PDFAnalyzer
 
             var generatorParams = new GeneratorParams(model);
 
+            // 5.1) Tokenize the input text
             var sequences = tokenizer.Encode(prompt);
 
             generatorParams.SetSearchOption("max_length", 1024);
@@ -44,6 +45,8 @@ namespace PDFAnalyzer
             using var tokenizerStream = tokenizer.CreateStream();
             using var generator = new Generator(model, generatorParams);
             StringBuilder stringBuilder = new();
+
+            // 5.2) Generate the output text, streaming the results
             while (!generator.IsDone())
             {
                 string part;
@@ -57,6 +60,8 @@ namespace PDFAnalyzer
                     await Task.Delay(0, ct).ConfigureAwait(false);
                     generator.ComputeLogits();
                     generator.GenerateNextToken();
+
+                    // 5.3) Decode the generated token
                     part = tokenizerStream.Decode(generator.GetSequence(0)[^1]);
                     stringBuilder.Append(part);
                     if (stringBuilder.ToString().Contains("<|end|>")
