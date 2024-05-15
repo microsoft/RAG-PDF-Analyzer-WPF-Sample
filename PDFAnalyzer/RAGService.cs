@@ -255,7 +255,7 @@ namespace PDFAnalyzer
 
             await Task.Run(async () =>
             {
-                int chunkSize = Math.Min(128, Math.Max(32, (int)(128 * MaxDedicatedVideoMemory / (1024f * 1024) / 8192)));
+                int chunkSize = 128;
                 for (int i = 0; i < contents.Count; i += chunkSize)
                 {
                     if (ct.IsCancellationRequested)
