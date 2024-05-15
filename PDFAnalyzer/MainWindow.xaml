@@ -11,21 +11,43 @@
     mc:Ignorable="d">
     <Grid Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer Padding="16">
+        <Grid
+            x:Name="IndexPDFProgressStackPanel"
+            MaxWidth="480"
+            Margin="16"
+            Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                x:Name="IndexPDFProgressTextBlock"
+                Grid.Row="1"
+                Margin="4"
+                HorizontalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}" />
+            <ProgressBar
+                x:Name="IndexPDFProgressBar"
+                Grid.Row="0"
+                Height="8"
+                Margin="12"
+                HorizontalAlignment="Stretch" />
+        </Grid>
+        <ScrollViewer Padding="16" Grid.Row="1">
             <TextBlock FontSize="18" TextWrapping="WrapWithOverflow">
                 <Run x:Name="PagesUsedRun" FontWeight="SemiBold" />
                 <LineBreak />
                 <LineBreak /><Run x:Name="AnswerRun" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
             </TextBlock>
         </ScrollViewer>
-
         <Grid
             x:Name="ChatGrid"
-            Grid.Row="1"
-            Visibility="Collapsed">
+            Visibility="Collapsed"
+            Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -73,7 +95,7 @@
         </Grid>
         <Grid
             x:Name="PdfImageGrid"
-            Grid.RowSpan="4"
+            Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             Background="#88000000"
             Visibility="Collapsed">
@@ -115,9 +137,8 @@
         </Grid>
         <Grid
             x:Name="IndexPDFGrid"
-            Grid.RowSpan="4"
+            Grid.RowSpan="3"
             Grid.ColumnSpan="2"
-            Margin="0,-86,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
             <Grid.RowDefinitions>
@@ -136,29 +157,6 @@
                 Content="Select a PDF"
                 IsEnabled="False"
                 Style="{StaticResource DefaultAccentButtonStyle}" />
-            <Grid
-                x:Name="IndexPDFProgressStackPanel"
-                Grid.Row="2"
-                MaxWidth="480"
-                Margin="16"
-                Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    x:Name="IndexPDFProgressTextBlock"
-                    Grid.Row="1"
-                    Margin="4"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}" />
-                <ProgressBar
-                    x:Name="IndexPDFProgressBar"
-                    Grid.Row="0"
-                    Height="8"
-                    Margin="12"
-                    HorizontalAlignment="Stretch" />
-            </Grid>
         </Grid>
     </Grid>
 </Window>

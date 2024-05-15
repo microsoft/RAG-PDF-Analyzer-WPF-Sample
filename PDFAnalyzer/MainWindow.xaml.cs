@@ -81,6 +81,8 @@ namespace PDFAnalyzer
                 return;
             }
 
+            IndexPDFGrid.Visibility = Visibility.Collapsed;
+            ChatGrid.Visibility = Visibility.Visible;
             IndexPDFProgressStackPanel.Visibility = Visibility.Visible;
             IndexPDFProgressBar.Minimum = 0;
             IndexPDFProgressBar.Maximum = 1;
@@ -204,11 +206,9 @@ namespace PDFAnalyzer
 
             await Application.Current.Dispatcher.InvokeAsync(async () =>
             {
-                IndexPDFProgressStackPanel.Visibility = Visibility.Collapsed;
                 IndexPDFButton.IsEnabled = RAGService.IsModelReady;
                 await Task.Delay(1000);
-                IndexPDFGrid.Visibility = Visibility.Collapsed;
-                ChatGrid.Visibility = Visibility.Visible;
+                IndexPDFProgressStackPanel.Visibility = Visibility.Collapsed;
             });
         }
 
