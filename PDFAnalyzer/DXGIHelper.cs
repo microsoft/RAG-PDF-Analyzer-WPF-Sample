@@ -6,17 +6,15 @@ namespace PDFAnalyzer
 {
     internal static class DXGIHelper
     {
-        public static int GetBestDeviceId(out nuint maxDedicatedVideoMemory)
+        public static int GetBestDeviceId()
         {
             int deviceId = 0;
-            maxDedicatedVideoMemory = 0;
-
-            IDXGIFactory2? dxgiFactory = null;
+            nuint maxDedicatedVideoMemory = 0;
             try
             {
                 DXGI_CREATE_FACTORY_FLAGS createFlags = 0;
                 Windows.Win32.PInvoke.CreateDXGIFactory2(createFlags, typeof(IDXGIFactory2).GUID, out object dxgiFactoryObj).ThrowOnFailure();
-                dxgiFactory = (IDXGIFactory2)dxgiFactoryObj;
+                IDXGIFactory2? dxgiFactory = (IDXGIFactory2)dxgiFactoryObj;
 
                 IDXGIAdapter1? selectedAdapter = null;
 

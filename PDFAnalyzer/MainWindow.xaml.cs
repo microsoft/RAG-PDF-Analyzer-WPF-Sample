@@ -230,8 +230,6 @@ namespace PDFAnalyzer
             cts = new CancellationTokenSource();
             AskSLMButton.Content = "Cancel";
 
-            SLMRunner.SearchMaxLength = Math.Min(4096, Math.Max(1024, (int)(RAGService.MaxDedicatedVideoMemory / (1024 * 1024))));
-
             // 4) Search the chunks using the user's prompt, with the same model used for indexing
             List<TextChunk> contents = (await RAGService.Search(SearchTextBox.Text, 3, 1)).OrderBy(c => c.ChunkIndexInSource).ToList();
 

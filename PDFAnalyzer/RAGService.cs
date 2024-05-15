@@ -29,8 +29,6 @@ namespace PDFAnalyzer
         [MemberNotNullWhen(true, nameof(_inferenceSession), nameof(_embeddings))]
         public bool IsReady => IsModelReady && IsEmbeddingsReady;
 
-        public nuint MaxDedicatedVideoMemory { get; internal set; }
-
         [MemberNotNull(nameof(_inferenceSession))]
         private void InitModel()
         {
@@ -44,8 +42,7 @@ namespace PDFAnalyzer
                 LogSeverityLevel = OrtLoggingLevel.ORT_LOGGING_LEVEL_INFO
             };
 
-            int deviceId = DXGIHelper.GetBestDeviceId(out nuint maxDedicatedVideoMemory);
-            MaxDedicatedVideoMemory = maxDedicatedVideoMemory;
+            int deviceId = DXGIHelper.GetBestDeviceId();
 
             sessionOptions.AppendExecutionProvider_DML(deviceId);
 

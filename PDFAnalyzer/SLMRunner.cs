@@ -18,8 +18,6 @@ namespace PDFAnalyzer
         [MemberNotNullWhen(true, nameof(model), nameof(tokenizer))]
         public bool IsReady => model != null && tokenizer != null;
 
-        public int SearchMaxLength { get; set; } = 4096;
-
         public void Dispose()
         {
             model?.Dispose();
