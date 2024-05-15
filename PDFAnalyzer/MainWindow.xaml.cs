@@ -115,7 +115,7 @@ namespace PDFAnalyzer
             }
 
             // 2) Split the text into chunks
-            var maxLength = 1024 / 4;
+            var maxLength = 1024 / 2;
             for (int i = 0; i < contents.Count; i++)
             {
                 var content = contents[i];

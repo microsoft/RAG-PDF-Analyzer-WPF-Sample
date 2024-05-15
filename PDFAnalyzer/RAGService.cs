@@ -251,25 +251,11 @@ namespace PDFAnalyzer
 
             await Task.Run(InitModel, ct).ConfigureAwait(false);
 
-            int slidingWindowSize = 3;
-            List<TextChunk> splitContents = new List<TextChunk>();
-            for (int i = 0; i < contents.Count - slidingWindowSize + 1; i++)
-            {
-                string text = string.Join(" ", contents[i..].Take(slidingWindowSize).Select(c => c.Text!));
-                splitContents.Add(
-                    new TextChunk(contents[i])
-                    {
-                        Text = text,
-                        ChunkIndexInSource = i
-                    });
-            }
-            contents = splitContents;
-
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             await Task.Run(async () =>
             {
-                int chunkSize = 32;
+                int chunkSize = Math.Min(128, Math.Max(32, (int)(128 * MaxDedicatedVideoMemory / (1024f * 1024) / 8192)));
                 for (int i = 0; i < contents.Count; i += chunkSize)
                 {
                     if (ct.IsCancellationRequested)
