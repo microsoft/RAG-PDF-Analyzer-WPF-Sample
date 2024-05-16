@@ -9,7 +9,7 @@ namespace PDFAnalyzer
 {
     public class SLMRunner : IDisposable
     {
-        private readonly string ModelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "onnx-models", "phi3-directml-int4-awq-block-128");
+        private readonly string ModelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "onnx-models", "phi3-cpu-int4-rtn-block-32-acc-level-4");
 
         private Model? model = null;
         private Tokenizer? tokenizer = null;
@@ -40,7 +40,6 @@ namespace PDFAnalyzer
 
             generatorParams.SetSearchOption("max_length", 1024);
             generatorParams.SetInputSequences(sequences);
-            generatorParams.TryGraphCaptureWithMaxBatchSize(1);
 
             using var tokenizerStream = tokenizer.CreateStream();
             using var generator = new Generator(model, generatorParams);
