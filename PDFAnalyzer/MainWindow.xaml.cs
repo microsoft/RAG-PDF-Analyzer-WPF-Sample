@@ -116,7 +116,8 @@ namespace PDFAnalyzer
                 }
             }
 
-            // 2) Split the text into chunks
+            // 2) Split the text into chunks to make sure they are
+            // smaller than what the Embeddings model supports
             var maxLength = 1024 / 2;
             for (int i = 0; i < contents.Count; i++)
             {
@@ -222,19 +223,19 @@ namespace PDFAnalyzer
                 return;
             }
 
+            selectedPageIndex = 0;
+            AskSLMButton.Content = "Cancel";
+            cts = new CancellationTokenSource();
+
             var prompt = """
         <|system|>
         You are a helpful assistant helping answer questions about this information:
         """;
 
-            cts = new CancellationTokenSource();
-            AskSLMButton.Content = "Cancel";
-
             // 4) Search the chunks using the user's prompt, with the same model used for indexing
-            List<TextChunk> contents = (await RAGService.Search(SearchTextBox.Text, 3, 1)).OrderBy(c => c.ChunkIndexInSource).ToList();
+            var contents = (await RAGService.Search(SearchTextBox.Text, 3, 1)).OrderBy(c => c.ChunkIndexInSource);
 
             selectedPages = contents.Select(c => (uint)c.Page).Distinct().ToList();
-            selectedPageIndex = 0;
 
             PagesUsedRun.Text = $"Using page(s) : {string.Join(", ", selectedPages)}";
 
