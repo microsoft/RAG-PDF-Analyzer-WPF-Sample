@@ -33,6 +33,8 @@ namespace PDFAnalyzer
 
             var generatorParams = new GeneratorParams(model);
 
+            Debug.WriteLine($"Prompt length: {prompt.Length}");
+
             // 5.1) Tokenize the input text
             var sequences = tokenizer.Encode(prompt);
 
@@ -45,6 +47,8 @@ namespace PDFAnalyzer
             StringBuilder stringBuilder = new();
 
             // 5.2) Generate the output text, streaming the results
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            int tokenCount = 0;
             while (!generator.IsDone())
             {
                 string part;
@@ -58,6 +62,14 @@ namespace PDFAnalyzer
                     await Task.Delay(0, ct).ConfigureAwait(false);
                     generator.ComputeLogits();
                     generator.GenerateNextToken();
+
+                    tokenCount++;
+                    if (stopwatch.Elapsed.TotalSeconds >= 1)
+                    {
+                        Debug.WriteLine($"Tokens per second: {tokenCount / stopwatch.Elapsed.TotalSeconds}");
+                        stopwatch.Restart();
+                        tokenCount = 0;
+                    }
 
                     // 5.3) Decode the generated token
                     part = tokenizerStream.Decode(generator.GetSequence(0)[^1]);
