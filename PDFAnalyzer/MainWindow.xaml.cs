@@ -229,7 +229,7 @@ namespace PDFAnalyzer
 
             var prompt = """
         <|system|>
-        You are a helpful assistant helping answer questions about this information:
+        You are a helpful assistant, and you should answer questions about this information, in a direct and simple way, using only this content:
         """;
 
             // 4) Search the chunks using the user's prompt, with the same model used for indexing
