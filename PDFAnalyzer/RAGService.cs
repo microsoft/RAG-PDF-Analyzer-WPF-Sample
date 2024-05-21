@@ -227,7 +227,7 @@ namespace PDFAnalyzer
                 contents.AddRange(_embeddings.TextChunks.Skip(indexMin).Take(indexMax - indexMin).ToList());
             }
 
-            return contents.DistinctBy(c => c.ChunkIndexInSource).ToList();
+            return contents.DistinctBy(c => c.Page).ToList();
         }
 
         public async Task InitializeAsync(List<TextChunk>? contents = null, EventHandler<float>? progress = null, CancellationToken ct = default)
