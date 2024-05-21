@@ -233,7 +233,7 @@ namespace PDFAnalyzer
         """;
 
             // 4) Search the chunks using the user's prompt, with the same model used for indexing
-            var contents = (await RAGService.Search(SearchTextBox.Text, 3, 1)).OrderBy(c => c.Page);
+            var contents = (await RAGService.Search(SearchTextBox.Text, 2, 1)).OrderBy(c => c.Page);
 
             selectedPages = contents.Select(c => (uint)c.Page).Distinct().ToList();
 
