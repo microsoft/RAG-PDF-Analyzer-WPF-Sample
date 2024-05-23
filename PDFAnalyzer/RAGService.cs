@@ -7,6 +7,7 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 using System.Text.RegularExpressions;
 using System.Numerics;
 using PDFAnalyzer.VectorDB;
+using System;
 
 namespace PDFAnalyzer
 {
@@ -209,7 +210,7 @@ namespace PDFAnalyzer
             return result;
         }
 
-        public async Task<List<TextChunk>> Search(string searchTerm, int top = 5, int range = 3)
+        public async Task<List<TextChunk>> Search(string searchTerm, int top = 5)
         {
             List<TextChunk> contents = [];
             if (!IsReady)
@@ -222,9 +223,7 @@ namespace PDFAnalyzer
 
             for (int i = 0; i < top; i++)
             {
-                var indexMin = Math.Max(0, ranking[i] - range);
-                var indexMax = Math.Min(indexMin + range, _embeddings.TextChunks.Count);
-                contents.AddRange(_embeddings.TextChunks.Skip(indexMin).Take(indexMax - indexMin).ToList());
+                contents.Add(_embeddings.TextChunks[ranking[i]]);
             }
 
             return contents.DistinctBy(c => c.Page).ToList();
