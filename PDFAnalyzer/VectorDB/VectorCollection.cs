@@ -1,4 +1,6 @@
-﻿namespace PDFAnalyzer.VectorDB
+﻿using System.Numerics.Tensors;
+
+namespace PDFAnalyzer.VectorDB
 {
     public class VectorCollection
     {
@@ -25,8 +27,7 @@
 
             for (int i = 0; i < Dimensions; i++)
             {
-                var score = CosineSimilarity(TextChunks[i].Vectors, searchVector);
-                scores[i] = score;
+                scores[i] = TensorPrimitives.CosineSimilarity(TextChunks[i].Vectors, searchVector);
             }
 
             var indexedFloats = scores.Select((value, index) => new { Value = value, Index = index })
@@ -39,34 +40,6 @@
             indexRanks = indexedFloats.Select(item => item.Index).ToArray();
 
             return indexRanks;
-        }
-
-        private static float CosineSimilarity(float[] v1, float[] v2)
-        {
-            if (v1.Length != v2.Length)
-            {
-                throw new ArgumentException("Vectors must have the same length.");
-            }
-            return DotProduct(v1, v2);
-        }
-
-        private static float CheckOverflow(double x)
-        {
-            if (x >= double.MaxValue)
-            {
-                throw new OverflowException("operation caused overflow");
-            }
-            return (float)x;
-        }
-
-        private static float DotProduct(float[] a, float[] b)
-        {
-            float result = 0.0f;
-            for (int i = 0; i < a.Length; i++)
-            {
-                result = CheckOverflow(result + CheckOverflow(a[i] * b[i]));
-            }
-            return result;
         }
     }
 }
