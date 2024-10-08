@@ -7,6 +7,7 @@
     Title="RAG with Phi 3"
     Width="1600"
     Height="900"
+    ThemeMode="System"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid Loaded="Grid_Loaded">
@@ -37,7 +38,7 @@
                 Margin="12"
                 HorizontalAlignment="Stretch" />
         </Grid>
-        <ScrollViewer Padding="16" Grid.Row="1">
+        <ScrollViewer Grid.Row="1" Padding="16">
             <TextBlock FontSize="18" TextWrapping="WrapWithOverflow">
                 <Run x:Name="PagesUsedRun" FontWeight="SemiBold" />
                 <LineBreak />
@@ -46,8 +47,8 @@
         </ScrollViewer>
         <Grid
             x:Name="ChatGrid"
-            Visibility="Collapsed"
-            Grid.Row="2">
+            Grid.Row="2"
+            Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -70,9 +71,9 @@
                 Margin="16,16,16,16"
                 VerticalAlignment="Stretch"
                 FontSize="18"
-                Text="Search PDF..."
                 GotFocus="SearchTextBox_GotFocus"
                 LostFocus="SearchTextBox_LostFocus"
+                Text="Search PDF..."
                 TextWrapping="Wrap" />
             <Button
                 x:Name="AskSLMButton"
@@ -82,7 +83,7 @@
                 Click="AskSLMButton_Click"
                 Content="Answer"
                 IsEnabled="False"
-                Style="{StaticResource DefaultAccentButtonStyle}" />
+                Style="{StaticResource AccentButtonStyle}" />
             <Button
                 x:Name="ShowPDFPage"
                 Grid.Row="1"
@@ -156,7 +157,7 @@
                 Click="IndexPDFButton_Click"
                 Content="Select a PDF"
                 IsEnabled="False"
-                Style="{StaticResource DefaultAccentButtonStyle}" />
+                Style="{StaticResource AccentButtonStyle}" />
         </Grid>
     </Grid>
 </Window>
